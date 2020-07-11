@@ -74,26 +74,16 @@ const conf = document.querySelector('.add'),
       check = conf.querySelector('[type = "checkbox"]'),
       movieList = document.querySelector('.promo__interactive-list');
 
-movieList.innerHTML = "";
+
 let sortFilms = movieDB.movies.sort();
-movieDB.movies.forEach((item, i) => {
-    movieList.innerHTML +=`<li class="promo__interactive-item">${i+1} ${sortFilms[i]} 
-    <div class="delete"></div>
-    </li>`;
-});
+    
+createMovieList();
+
  function addFilm(event){
     event.preventDefault();
     movieDB.movies.push(lastFilm.value);
-    movieList.innerHTML = "";
     sortFilms = movieDB.movies.sort(compareFunction);
-    movieDB.movies.forEach(function(item, i){
-        if(movieDB.movies[i].length > 21){
-        sortFilms[i] = `${movieDB.movies[i].slice(0, 21)}...`;
-        }
-    movieList.innerHTML +=`<li class="promo__interactive-item">${i+1} ${sortFilms[i]} 
-    <div class="delete"></div>
-    </li>`;
-    });
+    createMovieList();
     if(check.checked == true){
         console.log("Добавляем любимый фильм");
     }
@@ -107,7 +97,19 @@ movieDB.movies.forEach((item, i) => {
              return -1;
          }
          return 0;
-        };
+        }
+
+ function createMovieList(){
+    movieList.innerHTML = "";   
+    movieDB.movies.forEach(function(item, i){
+        if(movieDB.movies[i].length > 21){
+        sortFilms[i] = `${movieDB.movies[i].slice(0, 21)}...`;
+        }
+    movieList.innerHTML +=`<li class="promo__interactive-item">${i+1} ${sortFilms[i]} 
+    <div class="delete"></div>
+    </li>`;
+    });
+ }
  
  conf.addEventListener('submit', addFilm);
 
